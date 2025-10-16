@@ -2,6 +2,18 @@
   "version": 2,
   "dependencies": {
     "net9.0": {
+      "Bluehill.Blazor": {
+        "type": "Direct",
+        "requested": "[0.10.0, )",
+        "resolved": "0.10.0",
+        "contentHash": "HSGOiSZDPangDRYuzLqnw5U0CuHGLkFJ2do+0DREEgU0vvCN8prGOxziapKcVEnW4NVPe/ZTBm7ZUor18pT/wg=="
+      },
+      "Bluehill.Blazor.GHPages": {
+        "type": "Direct",
+        "requested": "[1.0.2, )",
+        "resolved": "1.0.2",
+        "contentHash": "bTChJ7ylLxNuz5tdGloCPYnx6906FKax3ea1g7Ts5Ds0gkR/jtDe7XqM2KOX7/KsitLu+YxqKs5zvJrcCaWI2w=="
+      },
       "Bluehill.Imports": {
         "type": "Direct",
         "requested": "[1.0.21, )",
