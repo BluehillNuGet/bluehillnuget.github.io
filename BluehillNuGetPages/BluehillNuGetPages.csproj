@@ -7,11 +7,24 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</RestoreLockedMode>
+    <Features>use-roslyn-tokenizer=true</Features>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="BlazorMonaco" />
     <PackageReference Include="Bluehill.Blazor" />
     <PackageReference Include="Bluehill.Blazor.GHPages" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly"/>
+    <PackageReference Include="Bluehill.Deconstructors" />
+    <PackageReference Include="Bluehill.Hangul" />
+    <PackageReference Include="Bluehill.StringExtensions" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
   </ItemGroup>
+  <Target Name="GetAssemblyPath" AfterTargets="Publish">
+    <ItemGroup>
+      <MyReferencedAssemblies Include="@(ReferencePath)" />
+    </ItemGroup>
+    <MakeDir Directories="$(PublishDir)wwwroot/ref-assemblies" />
+    <Copy SourceFiles="@(MyReferencedAssemblies)" DestinationFolder="$(PublishDir)wwwroot/ref-assemblies/" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

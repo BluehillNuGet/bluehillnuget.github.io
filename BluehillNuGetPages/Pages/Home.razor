@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using static BluehillNuGetPages.Packages
 
 <h1>Bluehill's NuGet packages</h1>
 
@@ -9,16 +10,16 @@
 <h2>Libraries</h2>
 
 <ul>
-    <li><a href="https://hangul.bluehill.dev">Bluehill.Hangul</a></li>
-    <li><a href="https://nuget.bluehill.dev/Bluehill.Deconstructors/">Bluehill.Deconstructors</a></li>
-    <li><a href="https://analyzers.bluehill.dev">Bluehill.Analyzers</a></li>
-    <li><a href="https://nuget.bluehill.dev/Bluehill.CompilerServices/">Bluehill.CompilerServices</a></li>
-    <li><a href="https://github.com/BluehillNuGet/Bluehill.NativeCom">Bluehill.NativeCom</a></li>
-    <li><a href="https://github.com/BluehillNuGet/Bluehill.StringExtensions">Bluehill.StringExtensions</a></li>
+    <li><a href="@Hangul">Bluehill.Hangul</a></li>
+    <li><a href="@Deconstructors">Bluehill.Deconstructors</a></li>
+    <li><a href="@Analyzers">Bluehill.Analyzers</a></li>
+    <li><a href="@CompilerServices">Bluehill.CompilerServices</a></li>
+    <li><a href="@NativeCom">Bluehill.NativeCom</a></li>
+    <li><a href="@StringExtensions">Bluehill.StringExtensions</a></li>
 </ul>
 
 <h2>Templates</h2>
 
 <ul>
-    <li><a href="https://github.com/BluehillNuGet/Bluehill.SdkStyleTemplates">Bluehill.SdkStyleTemplates</a></li>
+    <li><a href="@SdkStyleTemplates">Bluehill.SdkStyleTemplates</a></li>
 </ul>
