@@ -96,7 +96,7 @@
 
         return mrs;
     }
-    
+
     private async Task hangulExample() =>
         await sce.SetValue("""
                            const string cheolsu = "철수";
@@ -129,14 +129,22 @@
 
                            """);
 
-    private async Task runCode()
+    private void runCode() => _ = Task.Run(compileAndRunCode);
+
+    private async Task compileAndRunCode()
     {
         var oldOut = Console.Out;
-        
+
         try
         {
-            isLoading = true;
-            output = null;
+            await InvokeAsync(() =>
+            {
+                isLoading = true;
+                output = null;
+
+                StateHasChanged();
+            });
+
             var value = await sce.GetValue();
 
             if (string.IsNullOrWhiteSpace(value))
@@ -152,7 +160,9 @@
 
             if (!er.Success)
             {
-                throw new InvalidOperationException(string.Join("\n", er.Diagnostics.Select(d => $"{d.Id}: {d.GetMessage()}")));
+                await InvokeAsync(() => { returnValue = new InvalidOperationException(string.Join("\n", er.Diagnostics.Select(d => $"{d.Id}: {d.GetMessage()}"))); });
+
+                return;
             }
 
             ms.Seek(0, SeekOrigin.Begin);
@@ -163,7 +173,9 @@
 
             if (contructor is null)
             {
-                throw new InvalidOperationException("Could not find script type constructor.");
+                await InvokeAsync(() => { returnValue = new InvalidOperationException("Could not find script type constructor."); });
+
+                return;
             }
 
             var instance = contructor.Invoke(null);
@@ -171,20 +183,27 @@
 
             if (entryPoint is null)
             {
-                throw new InvalidOperationException("Could not find script entry point method.");
+                await InvokeAsync(() => { returnValue = new InvalidOperationException("Could not find script entry point method."); });
+
+                return;
             }
 
             await using StringWriter sw = new();
-            output = sw.GetStringBuilder();
+            await InvokeAsync(() => output = sw.GetStringBuilder());
 
             Console.SetOut(sw);
 
-            returnValue = await (Task<object?>)entryPoint.Invoke(instance, null)! ?? "(Not returned)";
-        }
-        finally
+           await InvokeAsync(async () => returnValue = await (Task<object?>)entryPoint.Invoke(instance, null)! ?? "(Not returned)");
+        } finally
         {
             Console.SetOut(oldOut);
-            isLoading = false;
+
+            await InvokeAsync(() =>
+            {
+                isLoading = false;
+
+                StateHasChanged();
+            });
         }
     }
 
